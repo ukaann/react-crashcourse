@@ -1,5 +1,7 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import HeadcountCard from "../components/HeadcountCard";
+
 
 type MyQRProps = {
   token?: string;
@@ -21,12 +23,16 @@ export default function MyQR({ token: tokenProp, onStartOver }: MyQRProps) {
   };
 
   return (
+    
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>MyQR</Text>
 
       <View style={styles.card}>
         <Text style={styles.tokenText}>Your QR token: {token ?? "none"}</Text>
       </View>
+      
+      <HeadcountCard eventId={token} />
+
 
       <Pressable onPress={handleStartOver} style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}>
         <Text style={styles.buttonText}>Start over</Text>
