@@ -1,17 +1,22 @@
-import { useLocalSearchParams } from "expo-router";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
-export default function MyQR() {
-  const { token } = useLocalSearchParams<{ token?: string }>();
+type Props = {
+  token: string;
+  onStartOver: () => void;
+};
 
+export default function MyQR({ token, onStartOver }: Props) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>MyQR</Text>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Token</Text>
-        <Text style={styles.token}>{token ?? "No token provided"}</Text>
+        <Text style={styles.token}>Your QR token: {token}</Text>
       </View>
+
+      <Pressable onPress={onStartOver} style={({ pressed }) => [styles.button, pressed && styles.pressed]}>
+        <Text style={styles.buttonText}>Start over</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -19,13 +24,9 @@ export default function MyQR() {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, justifyContent: "center" },
   title: { fontSize: 28, fontWeight: "800", marginBottom: 16, textAlign: "center" },
-  card: {
-    padding: 16,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: "#111827",
-    backgroundColor: "#f3f4f6",
-  },
-  label: { fontSize: 14, fontWeight: "700", marginBottom: 8, opacity: 0.8 },
+  card: { padding: 16, borderRadius: 12, backgroundColor: "#f3f4f6", borderWidth: 2, borderColor: "#111827", marginBottom: 16 },
   token: { fontSize: 16, fontWeight: "700" },
+  button: { paddingVertical: 12, borderRadius: 10, backgroundColor: "#111827", alignItems: "center" },
+  pressed: { opacity: 0.85 },
+  buttonText: { color: "white", fontSize: 16, fontWeight: "700" },
 });
